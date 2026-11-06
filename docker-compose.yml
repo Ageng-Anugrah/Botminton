@@ -1,0 +1,23 @@
+services:
+  botminton:
+    build:
+      context: .
+    image: botminton:latest
+    container_name: botminton
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      EVENTS_FILE: /app/data/events.json
+    volumes:
+      - botminton-data:/app/data
+    init: true
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  botminton-data:
